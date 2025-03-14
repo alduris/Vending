@@ -1,5 +1,8 @@
-﻿using BepInEx;
+﻿global using Random = UnityEngine.Random;
+using BepInEx;
 using BepInEx.Logging;
+using FunMod.Hooks;
+using System;
 using System.Security.Permissions;
 
 // Allows access to private members
@@ -7,9 +10,9 @@ using System.Security.Permissions;
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 #pragma warning restore CS0618
 
-namespace TestMod;
+namespace FunMod;
 
-[BepInPlugin("com.author.testmod", "Test Mod", "0.1.0")]
+[BepInPlugin("alduris.fun", "Fun Mod", "1.0")]
 sealed class Plugin : BaseUnityPlugin
 {
     public static new ManualLogSource Logger;
@@ -18,17 +21,29 @@ sealed class Plugin : BaseUnityPlugin
     public void OnEnable()
     {
         Logger = base.Logger;
-        On.RainWorld.OnModsInit += OnModsInit;
+        On.RainWorld.PostModsInit += OnModsInit; // after for no good reason
     }
 
-    private void OnModsInit(On.RainWorld.orig_OnModsInit orig, RainWorld self)
+    private void OnModsInit(On.RainWorld.orig_PostModsInit orig, RainWorld self)
     {
         orig(self);
 
         if (IsInit) return;
         IsInit = true;
 
-        // Initialize assets, your mod config, and anything that uses RainWorld here
-        Logger.LogDebug("Hello world!");
+        try
+        {
+            // Apply hooks
+            CentipedeHooks.Apply();
+            ElectricDeathHooks.Apply();
+            IteratorHooks.Apply();
+            SlugpupHooks.Apply();
+            VultureGrubHooks.Apply();
+            MiscHooks.Apply();
+        }
+        catch (Exception e)
+        {
+            Logger.LogError(e);
+        }
     }
 }
