@@ -21,7 +21,7 @@ namespace FunMod.Hooks
             orig(self, edible);
 
             // Get how much slup likes or dislikes the food
-            if (ModManager.MSC)
+            if (ModManager.MSC && self.AI != null)
             {
                 var ai = self.AI;
                 var foodType = ai.GetFoodType(edible as PhysicalObject);

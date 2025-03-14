@@ -7,6 +7,8 @@ namespace FunMod.Hooks
 {
     internal static class MiscHooks
     {
+        private const float RANDOM_POLE_CHANCE = 0.1f;
+
         public static void Apply()
         {
             // Explode on death
@@ -15,9 +17,8 @@ namespace FunMod.Hooks
             // Moon's neurons kill you
             On.PhysicalObject.Collide += NeuronFlyKill;
 
-            // Everything has the same relationships
-            On.CreatureTemplate.ctor_Type_CreatureTemplate_List1_List1_Relationship += HungryWorld_DefaultRelationship;
-            On.StaticWorld.EstablishRelationship += HungryWorld_EstablishRelationship;
+            // Random pole mimics
+            On.WorldLoader.GeneratePopulation += RandomPolePlants;
         }
 
         private static void Creature_Die(On.Creature.orig_Die orig, Creature self)
@@ -67,6 +68,36 @@ namespace FunMod.Hooks
         private static void HungryWorld_EstablishRelationship(On.StaticWorld.orig_EstablishRelationship orig, CreatureTemplate.Type a, CreatureTemplate.Type b, CreatureTemplate.Relationship relationship)
         {
             orig(a, b, new CreatureTemplate.Relationship(CreatureTemplate.Relationship.Type.Eats, 1f));
+        }
+
+        private static void RandomPolePlants(On.WorldLoader.orig_GeneratePopulation orig, WorldLoader self, bool fresh)
+        {
+            orig(self, fresh);
+            try
+            {
+                foreach (var room in self.world.abstractRooms)
+                {
+                    if (!room.shelter && !room.gate && room.dens > 0)
+                    {
+                        for (int i = 0; i < room.dens; i++)
+                        {
+                            if (Random.value < RANDOM_POLE_CHANCE)
+                            {
+                                Plugin.Logger.LogDebug("Pole ADDED!!!");
+                                var pole = new AbstractCreature(self.world, StaticWorld.GetCreatureTemplate(CreatureTemplate.Type.PoleMimic), null, new WorldCoordinate(room.index, -1, -1, room.exits + i), self.game.GetNewID())
+                                {
+                                    saveCreature = false
+                                };
+                                room.MoveEntityToDen(pole);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Plugin.Logger.LogError(e);
+            }
         }
     }
 }
