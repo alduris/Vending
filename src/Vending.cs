@@ -183,6 +183,7 @@ namespace VendingMod
                         {
                             offers.AddRange([
                                 new AbstractObjectType("DendriticNeuron", false),
+                                new AbstractObjectType("StarLemon", false),
                             ]);
                         }
 
