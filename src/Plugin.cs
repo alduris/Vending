@@ -2,6 +2,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using System;
+using System.Linq;
 using System.Security.Permissions;
 
 // Allows access to private members
@@ -15,6 +16,8 @@ namespace VendingMod;
 sealed class Plugin : BaseUnityPlugin
 {
     public static new ManualLogSource Logger;
+    public static bool M4rblelous = false;
+    public static bool Shrembly = false;
     bool IsInit;
 
     public void OnEnable()
@@ -26,6 +29,8 @@ sealed class Plugin : BaseUnityPlugin
     private void OnModsInit(On.RainWorld.orig_PostModsInit orig, RainWorld self)
     {
         orig(self);
+        M4rblelous = ModManager.ActiveMods.Any(x => x.id == "lb-fgf-m4r-ik.modpack");
+        Shrembly = ModManager.ActiveMods.Any(x => x.id == "com.rainworldgame.shroudedassembly.plugin");
 
         if (IsInit) return;
         IsInit = true;

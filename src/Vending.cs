@@ -17,7 +17,7 @@ namespace VendingMod
         private int tradeCooldown = 0;
 
         private readonly Product[][] products;
-        private readonly int[] rows = [4, 4, 6, 6, 6, 5];
+        private readonly int[] rows = [4, 4, 7, 7, 7, 5];
 
         // warmth stuff
         public Room loadedRoom => room;
@@ -131,12 +131,12 @@ namespace VendingMod
                 EntityID ID = room.game.GetNewID();
                 while (offerWorth > 0)
                 {
-                    int value = Custom.IntClamp(Mathf.CeilToInt(Mathf.Lerp(offerWorth / 2f, offerWorth, Random.value)), 1, 12);
+                    int value = Math.Max(Mathf.CeilToInt(Mathf.Lerp(offerWorth / 2f, offerWorth, Random.value)), 1);
                     offerWorth -= value;
 
                     AbstractPhysicalObject obj = null;
 
-                    if (value >= 12)
+                    if (value >= 10)
                     {
                         // Potential offers
                         List<AbstractObjectType> offers = [];
@@ -179,6 +179,12 @@ namespace VendingMod
                             if (offeredItem is not SingularityBomb && Random.value < 0.15f) offers.Add(MSCObjectType.SingularityBomb);
                             if (offeredItem is not ElectricSpear { abstractSpear.electricCharge: > 0 }) offers.Add(AbstractObjectType.Spear);
                         }
+                        if (Plugin.M4rblelous)
+                        {
+                            offers.AddRange([
+                                new AbstractObjectType("DendriticNeuron", false),
+                            ]);
+                        }
 
                         // Pick one
                         AbstractObjectType pick = offers[Random.Range(0, offers.Count)];
@@ -186,10 +192,10 @@ namespace VendingMod
                             obj = new VultureMask.AbstractVultureMask(room.world, null, pos, ID, ID.RandomSeed, Random.value < 0.2f);
                         else if (pick == AbstractObjectType.DataPearl)
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
-                        else if (pick == AbstractObjectType.KarmaFlower)
-                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else if (pick == AbstractObjectType.Spear)
                             obj = new AbstractSpear(room.world, null, pos, ID, false, true) { electricCharge = 10 };
+                        else if (AbstractConsumable.IsTypeConsumable(pick))
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
@@ -214,6 +220,24 @@ namespace VendingMod
                         {
                             if (offeredItem is not FireEgg && Random.value < 0.2f) offers.Add(MSCObjectType.FireEgg);
                         }
+                        if (Plugin.M4rblelous)
+                        {
+                            offers.AddRange([
+                                new AbstractObjectType("BouncingMelon", false),
+                                new AbstractObjectType("LimeMushroom", false),
+                                new AbstractObjectType("MarineEye", false),
+                                new AbstractObjectType("Physalis", false),
+                                new AbstractObjectType("StarLemon", false),
+                                new AbstractObjectType("ThornyStrawberry", false),
+                            ]);
+                        }
+                        if (Plugin.Shrembly)
+                        {
+                            offers.AddRange([
+                                new AbstractObjectType("RockFruit", false),
+                                new AbstractObjectType("PureCrystal", false)
+                            ]);
+                        }
 
                         // Pick one
                         AbstractObjectType pick = offers[Random.Range(0, offers.Count)];
@@ -221,6 +245,9 @@ namespace VendingMod
                         {
                             List<CreatureTemplate.Type> critters = [CreatureTemplate.Type.Snail, CreatureTemplate.Type.TubeWorm, CreatureTemplate.Type.TubeWorm];
                             if (ModManager.MSC) critters.Add(MoreSlugcatsEnums.CreatureTemplateType.Yeek);
+                            if (Plugin.M4rblelous) critters.Add(new CreatureTemplate.Type("HazerMom", false));
+                            if (Plugin.M4rblelous && Random.value < 0.01f) critters.Add(new CreatureTemplate.Type("NoodleEater", false));
+                            if (Plugin.Shrembly && Random.value < 0.01f) critters.Add(new CreatureTemplate.Type("BabyCroaker", false));
                             CreatureTemplate.Type critter = RandomFrom(critters.ToArray());
                             obj = new AbstractCreature(room.world, StaticWorld.GetCreatureTemplate(critter), null, pos, ID);
                         }
@@ -254,6 +281,8 @@ namespace VendingMod
                         if (offeredItem is not JellyFish) offers.Add(AbstractObjectType.JellyFish);
                         if (offeredItem is not Creature) offers.Add(AbstractObjectType.Creature);
 
+                        if (offeredItem is Rock && Random.value < 0.2f) offers.Add(AbstractObjectType.DataPearl);
+
                         if (ModManager.MSC)
                         {
                             if (offeredItem is not GooieDuck) offers.Add(MSCObjectType.GooieDuck);
@@ -276,6 +305,8 @@ namespace VendingMod
                         }
                         else if (pick == AbstractObjectType.Spear)
                             obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.05f);
+                        else if (pick == AbstractObjectType.DataPearl)
+                            obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
                         else if (ModManager.MSC && pick == MSCObjectType.LillyPuck)
                             obj = new LillyPuck.AbstractLillyPuck(room.world, null, pos, ID, 3, -1, -1, null);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
@@ -360,7 +391,7 @@ namespace VendingMod
             Random.State old = Random.state;
             Random.InitState((int)(pos.x + pos.y) + room.abstractRoom.index);
             var gray = new HSLColor(Random.Range(0.4f, 0.6f), Random.Range(0f, 0.1f), Random.Range(0.05f, 0.2f)).rgb;
-            sLeaser.sprites[0].color = Color.Lerp(Color.Lerp(palette.texture.GetPixel(4, 0), gray, 0.6f), palette.blackColor, room.Darkness(pos) * 0.75f);
+            sLeaser.sprites[0].color = Color.Lerp(Color.Lerp(palette.texture.GetPixel(4, 0), gray, 0.4f), palette.blackColor, room.Darkness(pos) * 0.75f);
             sLeaser.sprites[1].color = new Color(0.01f, 0.01f, 0.01f);
             for (int i = 2; i < 8; i++)
             {
