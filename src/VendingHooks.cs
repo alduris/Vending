@@ -1,6 +1,5 @@
-﻿using System.Linq;
+﻿using System;
 using System.Runtime.CompilerServices;
-using MonoMod.Cil;
 using RWCustom;
 using UnityEngine;
 
@@ -8,12 +7,28 @@ namespace VendingMod
 {
     internal static class VendingHooks
     {
-        private const float VENDING_CHANCE = 0.8f;
+        private const float VENDING_CHANCE = 0.12f;
 
         private static readonly ConditionalWeakTable<AbstractRoom, StrongBox<IntVector2>> vendPos = new();
         public static void Apply()
         {
             On.Room.Loaded += SpawnVending;
+            // On.RainWorldGame.Update += RainWorldGame_Update;
+        }
+
+        private static void RainWorldGame_Update(On.RainWorldGame.orig_Update orig, RainWorldGame self)
+        {
+            orig(self);
+            if (Input.GetKeyDown(KeyCode.Backslash))
+            {
+                Random.State old = Random.state;
+                foreach (var room in RainWorld.roomNameToIndex.Keys)
+                {
+                    Random.InitState(room.GetHashCode());
+                    if (Random.value < VENDING_CHANCE) Plugin.Logger.LogDebug(room);
+                }
+                Random.state = old;
+            }
         }
 
         private static void SpawnVending(On.Room.orig_Loaded orig, Room self)
@@ -21,10 +36,12 @@ namespace VendingMod
             bool firstTime = self.abstractRoom.firstTimeRealized;
             orig(self);
 
-            if (firstTime && (self.game?.IsStorySession ?? false) && !vendPos.TryGetValue(self.abstractRoom, out _) && !self.abstractRoom.shelter && !self.abstractRoom.gate && self.roomSettings.GetEffectAmount(RoomSettings.RoomEffect.Type.ZeroG) < 0.8f && Random.value < VENDING_CHANCE)
+            Random.State old = Random.state;
+            Random.InitState(self.abstractRoom.name.GetHashCode());
+            if (firstTime && (self.game?.IsStorySession ?? false) && !vendPos.TryGetValue(self.abstractRoom, out _) && !self.abstractRoom.shelter && !self.abstractRoom.gate && Random.value < VENDING_CHANCE)
             {
                 bool placed = false;
-                for (int attempts = 0; attempts < 20; attempts++)
+                for (int attempts = 0; attempts < Math.Max(self.TileWidth, self.TileHeight); attempts++)
                 {
                     var tile = self.RandomTile();
                     if (self.GetTile(tile).Solid) continue;
@@ -76,6 +93,7 @@ namespace VendingMod
                 var pos = posBox.Value;
                 self.AddObject(new Vending(self, self.MiddleOfTile(pos) + new Vector2(10f, 30f)));
             }
+            Random.state = old;
         }
     }
 }
