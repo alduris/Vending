@@ -9,7 +9,7 @@ using DataPearlType = DataPearl.AbstractDataPearl.DataPearlType;
 using MSCObjectType = MoreSlugcats.MoreSlugcatsEnums.AbstractObjectType;
 using Triangle = TriangleMesh.Triangle;
 
-namespace FunMod.Vending
+namespace VendingMod
 {
     public class Vending : UpdatableAndDeletable, IDrawable, IProvideWarmth
     {
@@ -69,7 +69,7 @@ namespace FunMod.Vending
                             foundOffer |= makingOffer;
                             for (int i = 0; i < 10; i++)
                             {
-                                if (p.input[i].y <= 0) makingOffer = false;
+                                if (p.input[i].y <= 0 && p.input[i].x == 0 && !p.input[i].jmp && !p.input[i].pckp && !p.input[i].mp && !p.input[i].thrw) makingOffer = false;
                             }
                             if (makingOffer)
                             {

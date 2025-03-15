@@ -1,9 +1,9 @@
 ﻿{
-  "id": "alduris.fun",
-  "name": "Fun Mod",
+  "id": "alduris.vending",
+  "name": "Vending Machines",
   "version": "1.0",
   "authors": "Alduris",
-  "description": "This mod is somewhat enjoyable.",
+  "description": "Has vending machines that appear randomly throughout the world.",
   "tags": [],
   "requirements": [],
   "requirements_names": [],

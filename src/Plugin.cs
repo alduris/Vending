@@ -1,8 +1,6 @@
 ﻿global using Random = UnityEngine.Random;
 using BepInEx;
 using BepInEx.Logging;
-using FunMod.Hooks;
-using FunMod.Vending;
 using System;
 using System.Security.Permissions;
 
@@ -11,9 +9,9 @@ using System.Security.Permissions;
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, SkipVerification = true)]
 #pragma warning restore CS0618
 
-namespace FunMod;
+namespace VendingMod;
 
-[BepInPlugin("alduris.fun", "Fun Mod", "1.0")]
+[BepInPlugin("alduris.vending", "Vending Machines", "1.0")]
 sealed class Plugin : BaseUnityPlugin
 {
     public static new ManualLogSource Logger;
@@ -34,14 +32,6 @@ sealed class Plugin : BaseUnityPlugin
 
         try
         {
-            // Apply hooks
-            CentipedeHooks.Apply();
-            //ElectricDeathHooks.Apply();
-            IteratorHooks.Apply();
-            SlugpupHooks.Apply();
-            VultureGrubHooks.Apply();
-            MiscHooks.Apply();
-
             VendingHooks.Apply();
         }
         catch (Exception e)

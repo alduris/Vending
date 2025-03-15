@@ -2,7 +2,7 @@
 using RWCustom;
 using UnityEngine;
 
-namespace FunMod.Vending
+namespace VendingMod
 {
     internal static class VendingHooks
     {
@@ -22,7 +22,7 @@ namespace FunMod.Vending
             if (firstTime && !vendPos.TryGetValue(self.abstractRoom, out _) && !self.abstractRoom.shelter && !self.abstractRoom.gate && self.roomSettings.GetEffectAmount(RoomSettings.RoomEffect.Type.ZeroG) < 0.8f && Random.value < VENDING_CHANCE)
             {
                 bool placed = false;
-                for (int attempts = 0; attempts < 10; attempts++)
+                for (int attempts = 0; attempts < 20; attempts++)
                 {
                     var tile = self.RandomTile();
                     if (self.GetTile(tile).Solid) continue;
@@ -30,7 +30,7 @@ namespace FunMod.Vending
                     bool valid = false;
                     while (tile.y > 0)
                     {
-                        if (self.GetTile(tile.x, tile.y - 1).Solid)
+                        if (!self.GetTile(tile.x, tile.y).Solid && !self.GetTile(tile.x + 1, tile.y).Solid && self.GetTile(tile.x, tile.y - 1).Solid && self.GetTile(tile.x + 1, tile.y - 1).Solid)
                         {
                             valid = true;
                             break;
