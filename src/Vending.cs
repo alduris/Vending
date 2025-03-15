@@ -131,7 +131,7 @@ namespace VendingMod
                 EntityID ID = room.game.GetNewID();
                 while (offerWorth > 0)
                 {
-                    int value = Math.Max(Mathf.CeilToInt(Mathf.Lerp(offerWorth / 2f, offerWorth, Random.value)), 1);
+                    int value = Random.value > 0.5f ? offerWorth : Math.Max(Mathf.CeilToInt(Mathf.Lerp(offerWorth * 0.65f, offerWorth, Random.value)), 1);
                     offerWorth -= value;
 
                     AbstractPhysicalObject obj = null;
@@ -171,7 +171,7 @@ namespace VendingMod
                         // Potential offers
                         List<AbstractObjectType> offers = [];
                         if (offeredItem is not VultureMask) offers.Add(AbstractObjectType.VultureMask);
-                        if (offeredItem is not KarmaFlower && Random.value < 0.3f) offers.Add(AbstractObjectType.KarmaFlower);
+                        if (offeredItem is not KarmaFlower) offers.Add(AbstractObjectType.KarmaFlower);
                         if (offeredItem is not DataPearl) offers.Add(AbstractObjectType.DataPearl);
                         if (offeredItem is not OracleSwarmer) offers.Add(AbstractObjectType.SSOracleSwarmer);
                         if (ModManager.MSC)
@@ -263,21 +263,15 @@ namespace VendingMod
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
 
-                    else
+                    else if (value >= 3)
                     {
-                        // Potential offers
-                        bool seed = ModManager.MSC && offeredItem.abstractPhysicalObject.type == MSCObjectType.Seed;
                         List<AbstractObjectType> offers = [];
                         if (offeredItem is not Spear) offers.Add(AbstractObjectType.Spear);
                         if (offeredItem is not ScavengerBomb) offers.Add(AbstractObjectType.ScavengerBomb);
-                        if (offeredItem is not Rock) offers.Add(AbstractObjectType.Rock);
-                        if (offeredItem is not DangleFruit) offers.Add(AbstractObjectType.DangleFruit);
-                        if (offeredItem is not SlimeMold || seed) offers.Add(AbstractObjectType.SlimeMold);
-                        if (offeredItem is not Mushroom) offers.Add(AbstractObjectType.Mushroom);
-                        if (offeredItem is not WaterNut and not SwollenWaterNut) offers.Add(AbstractObjectType.WaterNut);
                         if (offeredItem is not FlyLure) offers.Add(AbstractObjectType.FlyLure);
                         if (offeredItem is not FlareBomb) offers.Add(AbstractObjectType.FlareBomb);
                         if (offeredItem is not FirecrackerPlant) offers.Add(AbstractObjectType.FirecrackerPlant);
+                        if (offeredItem is not Mushroom) offers.Add(AbstractObjectType.Mushroom);
                         if (offeredItem is not JellyFish) offers.Add(AbstractObjectType.JellyFish);
                         if (offeredItem is not Creature) offers.Add(AbstractObjectType.Creature);
 
@@ -287,9 +281,22 @@ namespace VendingMod
                         {
                             if (offeredItem is not GooieDuck) offers.Add(MSCObjectType.GooieDuck);
                             if (offeredItem is not LillyPuck) offers.Add(MSCObjectType.LillyPuck);
-                            if (offeredItem is not GlowWeed) offers.Add(MSCObjectType.GlowWeed);
-                            if (offeredItem is not DandelionPeach) offers.Add(MSCObjectType.DandelionPeach);
-                            if (offeredItem is not SlimeMold || !seed) offers.Add(MSCObjectType.Seed);
+                        }
+                        if (Plugin.M4rblelous)
+                        {
+                            offers.AddRange([
+                                new AbstractObjectType("BouncingMelon", false),
+                                new AbstractObjectType("LimeMushroom", false),
+                                new AbstractObjectType("Physalis", false),
+                                new AbstractObjectType("ThornyStrawberry", false),
+                            ]);
+                        }
+                        if (Plugin.Shrembly)
+                        {
+                            offers.AddRange([
+                                new AbstractObjectType("RockFruit", false),
+                                new AbstractObjectType("PureCrystal", false)
+                            ]);
                         }
 
                         // Pick one
@@ -304,6 +311,43 @@ namespace VendingMod
                             obj = new AbstractCreature(room.world, StaticWorld.GetCreatureTemplate(critter), null, pos, ID);
                         }
                         else if (pick == AbstractObjectType.Spear)
+                            obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.3f);
+                        else if (pick == AbstractObjectType.DataPearl)
+                            obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
+                        else if (ModManager.MSC && pick == MSCObjectType.LillyPuck)
+                            obj = new LillyPuck.AbstractLillyPuck(room.world, null, pos, ID, 3, -1, -1, null);
+                        else if (AbstractConsumable.IsTypeConsumable(pick))
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
+                        else
+                            obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
+                    }
+
+                    else
+                    {
+                        // Potential offers
+                        List<AbstractObjectType> offers = [];
+                        bool seed = ModManager.MSC && offeredItem.abstractPhysicalObject.type == MSCObjectType.Seed;
+                        if (offeredItem is not Spear) offers.Add(AbstractObjectType.Spear);
+                        if (offeredItem is not ScavengerBomb) offers.Add(AbstractObjectType.ScavengerBomb);
+                        if (offeredItem is not Rock) offers.Add(AbstractObjectType.Rock);
+                        if (offeredItem is not DangleFruit) offers.Add(AbstractObjectType.DangleFruit);
+                        if (offeredItem is not SlimeMold || seed) offers.Add(AbstractObjectType.SlimeMold);
+                        if (offeredItem is not Mushroom) offers.Add(AbstractObjectType.Mushroom);
+                        if (offeredItem is not WaterNut and not SwollenWaterNut) offers.Add(AbstractObjectType.WaterNut);
+
+                        if (offeredItem is Rock && Random.value < 0.2f) offers.Add(AbstractObjectType.DataPearl);
+
+                        if (ModManager.MSC)
+                        {
+                            if (offeredItem is not LillyPuck) offers.Add(MSCObjectType.LillyPuck);
+                            if (offeredItem is not GlowWeed) offers.Add(MSCObjectType.GlowWeed);
+                            if (offeredItem is not DandelionPeach) offers.Add(MSCObjectType.DandelionPeach);
+                            if (offeredItem is not SlimeMold || !seed) offers.Add(MSCObjectType.Seed);
+                        }
+
+                        // Pick one
+                        AbstractObjectType pick = offers[Random.Range(0, offers.Count)];
+                        if (pick == AbstractObjectType.Spear)
                             obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.05f);
                         else if (pick == AbstractObjectType.DataPearl)
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
