@@ -7,7 +7,7 @@ namespace FunMod.Hooks
 {
     internal static class MiscHooks
     {
-        private const float RANDOM_POLE_CHANCE = 0.1f;
+        private const float RANDOM_POLE_CHANCE = 0.05f;
 
         public static void Apply()
         {
@@ -77,7 +77,7 @@ namespace FunMod.Hooks
             {
                 foreach (var room in self.world.abstractRooms)
                 {
-                    if (!room.shelter && !room.gate && room.dens > 0)
+                    if (!room.offScreenDen && !room.shelter && !room.gate && room.dens > 0)
                     {
                         for (int i = 0; i < room.dens; i++)
                         {

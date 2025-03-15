@@ -2,6 +2,7 @@
 using BepInEx;
 using BepInEx.Logging;
 using FunMod.Hooks;
+using FunMod.Vending;
 using System;
 using System.Security.Permissions;
 
@@ -35,11 +36,13 @@ sealed class Plugin : BaseUnityPlugin
         {
             // Apply hooks
             CentipedeHooks.Apply();
-            ElectricDeathHooks.Apply();
+            //ElectricDeathHooks.Apply();
             IteratorHooks.Apply();
             SlugpupHooks.Apply();
             VultureGrubHooks.Apply();
             MiscHooks.Apply();
+
+            VendingHooks.Apply();
         }
         catch (Exception e)
         {
