@@ -7,7 +7,6 @@ using UnityEngine;
 using AbstractObjectType = AbstractPhysicalObject.AbstractObjectType;
 using DataPearlType = DataPearl.AbstractDataPearl.DataPearlType;
 using MSCObjectType = MoreSlugcats.MoreSlugcatsEnums.AbstractObjectType;
-using Triangle = TriangleMesh.Triangle;
 
 namespace VendingMod
 {
@@ -16,10 +15,6 @@ namespace VendingMod
         public Vector2 pos;
 
         private int tradeCooldown = 0;
-
-        private int lastPlayerNear = 0;
-        private int playerNear = 0;
-        private bool foundOffer = false;
 
         private readonly Product[][] products;
         private readonly int[] rows = [4, 4, 6, 6, 6, 5];
@@ -50,9 +45,6 @@ namespace VendingMod
         public override void Update(bool eu)
         {
             base.Update(eu);
-            bool foundPlayer = false;
-            lastPlayerNear = playerNear;
-            foundOffer = false;
             if (tradeCooldown > 0) tradeCooldown--;
 
             if (tradeCooldown == 0)
@@ -62,30 +54,16 @@ namespace VendingMod
                     if (player?.realizedCreature?.room == room)
                     {
                         var p = player.realizedCreature as Player;
-                        if (!p.dead && !p.Stunned && !p.isNPC && p.bodyMode == Player.BodyModeIndex.Stand && Vector2.Distance(p.mainBodyChunk.pos, pos) < 50f)
+                        if (!p.dead && !p.Stunned && !p.isNPC && Vector2.Distance(p.mainBodyChunk.pos, pos) < 50f)
                         {
-                            foundPlayer = true;
-                            bool makingOffer = p.grasps.Any(x => ValueForItem(x?.grabbed) > 0);
-                            foundOffer |= makingOffer;
-                            for (int i = 0; i < 10; i++)
-                            {
-                                if (p.input[i].y <= 0 && p.input[i].x == 0 && !p.input[i].jmp && !p.input[i].pckp && !p.input[i].mp && !p.input[i].thrw) makingOffer = false;
-                            }
-                            if (makingOffer)
+                            bool hasOffer = p.grasps.Any(x => ValueForItem(x?.grabbed) > 0);
+                            if (hasOffer && VendingControls.GetControls(p, out var controls) && controls.DoTrade)
                             {
                                 MakeOffer(p);
                             }
                         }
                     }
                 }
-            }
-            if (foundPlayer)
-            {
-                playerNear++;
-            }
-            else if (playerNear > 0)
-            {
-                playerNear--;
             }
         }
 
@@ -318,7 +296,7 @@ namespace VendingMod
                 offeredItem.Destroy();
                 offeredItem.abstractPhysicalObject.Destroy();
 
-                tradeCooldown = 40 * 5;
+                // tradeCooldown = 40 * 5;
             }
 
             static T RandomFrom<T>(params T[] list) => list[Random.Range(0, list.Length)];
@@ -381,7 +359,8 @@ namespace VendingMod
         {
             Random.State old = Random.state;
             Random.InitState((int)(pos.x + pos.y) + room.abstractRoom.index);
-            sLeaser.sprites[0].color = Color.Lerp(new HSLColor(Random.Range(0.4f, 0.6f), Random.Range(0f, 0.1f), Random.Range(0.05f, 0.2f)).rgb, palette.blackColor, room.Darkness(pos) * 0.75f);
+            var gray = new HSLColor(Random.Range(0.4f, 0.6f), Random.Range(0f, 0.1f), Random.Range(0.05f, 0.2f)).rgb;
+            sLeaser.sprites[0].color = Color.Lerp(Color.Lerp(palette.texture.GetPixel(4, 0), gray, 0.6f), palette.blackColor, room.Darkness(pos) * 0.75f);
             sLeaser.sprites[1].color = new Color(0.01f, 0.01f, 0.01f);
             for (int i = 2; i < 8; i++)
             {

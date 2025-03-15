@@ -1,4 +1,6 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
+using MonoMod.Cil;
 using RWCustom;
 using UnityEngine;
 
@@ -30,6 +32,10 @@ namespace VendingMod
                     bool valid = false;
                     while (tile.y > 0)
                     {
+                        if (self.GetTile(tile.x, tile.y).DeepWater)
+                        {
+                            break;
+                        }
                         if (!self.GetTile(tile.x, tile.y).Solid && !self.GetTile(tile.x + 1, tile.y).Solid && self.GetTile(tile.x, tile.y - 1).Solid && self.GetTile(tile.x + 1, tile.y - 1).Solid)
                         {
                             valid = true;
