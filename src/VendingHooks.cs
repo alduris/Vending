@@ -19,7 +19,7 @@ namespace VendingMod
             bool firstTime = self.abstractRoom.firstTimeRealized;
             orig(self);
 
-            if (firstTime && !vendPos.TryGetValue(self.abstractRoom, out _) && !self.abstractRoom.shelter && !self.abstractRoom.gate && self.roomSettings.GetEffectAmount(RoomSettings.RoomEffect.Type.ZeroG) < 0.8f && Random.value < VENDING_CHANCE)
+            if (firstTime && (self.game?.IsStorySession ?? false) && !vendPos.TryGetValue(self.abstractRoom, out _) && !self.abstractRoom.shelter && !self.abstractRoom.gate && self.roomSettings.GetEffectAmount(RoomSettings.RoomEffect.Type.ZeroG) < 0.8f && Random.value < VENDING_CHANCE)
             {
                 bool placed = false;
                 for (int attempts = 0; attempts < 20; attempts++)
