@@ -82,7 +82,7 @@ namespace VendingMod
                 SlimeMold { JellyfishMode: true } => 0,
                 GlowWeed => 1,
                 Mushroom or Fly or Rock => 2,
-                FlyLure or FlareBomb or FireEgg or GooieDuck or FirecrackerPlant or JellyFish or SporePlant or PuffBall or Lantern => 3,
+                FlyLure or FlareBomb or FireEgg or GooieDuck or FirecrackerPlant or JellyFish or SporePlant or PuffBall or Lantern or BubbleGrass => 3,
                 Spear or LillyPuck or ScavengerBomb => 4,
                 OverseerCarcass => 5,
                 NeedleEgg => 6,
@@ -214,6 +214,7 @@ namespace VendingMod
                         if (offeredItem is not FlareBomb) offers.Add(AbstractObjectType.FlareBomb);
                         if (offeredItem is not FlyLure && Random.value < 0.6f) offers.Add(AbstractObjectType.FlyLure);
                         if (offeredItem is not FirecrackerPlant) offers.Add(AbstractObjectType.FirecrackerPlant);
+                        if (offeredItem is not BubbleGrass) offers.Add(AbstractObjectType.BubbleGrass);
                         if (offeredItem is not NeedleEgg && Random.value < 0.4f) offers.Add(AbstractObjectType.NeedleEgg);
                         if (offeredItem is not Creature && Random.value < 0.8f) offers.Add(AbstractObjectType.Creature);
 
@@ -274,6 +275,7 @@ namespace VendingMod
                         if (offeredItem is not FirecrackerPlant) offers.Add(AbstractObjectType.FirecrackerPlant);
                         if (offeredItem is not Mushroom) offers.Add(AbstractObjectType.Mushroom);
                         if (offeredItem is not JellyFish) offers.Add(AbstractObjectType.JellyFish);
+                        if (offeredItem is not BubbleGrass) offers.Add(AbstractObjectType.BubbleGrass);
                         if (offeredItem is not Creature) offers.Add(AbstractObjectType.Creature);
 
                         if (offeredItem is Rock && Random.value < 0.2f) offers.Add(AbstractObjectType.DataPearl);
