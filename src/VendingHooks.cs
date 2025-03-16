@@ -7,28 +7,12 @@ namespace VendingMod
 {
     internal static class VendingHooks
     {
-        private const float VENDING_CHANCE = 0.12f;
+        internal const float VENDING_CHANCE = 0.12f;
 
         private static readonly ConditionalWeakTable<AbstractRoom, StrongBox<IntVector2>> vendPos = new();
         public static void Apply()
         {
             On.Room.Loaded += SpawnVending;
-            // On.RainWorldGame.Update += RainWorldGame_Update;
-        }
-
-        private static void RainWorldGame_Update(On.RainWorldGame.orig_Update orig, RainWorldGame self)
-        {
-            orig(self);
-            if (Input.GetKeyDown(KeyCode.Backslash))
-            {
-                Random.State old = Random.state;
-                foreach (var room in RainWorld.roomNameToIndex.Keys)
-                {
-                    Random.InitState(room.GetHashCode());
-                    if (Random.value < VENDING_CHANCE) Plugin.Logger.LogDebug(room);
-                }
-                Random.state = old;
-            }
         }
 
         private static void SpawnVending(On.Room.orig_Loaded orig, Room self)

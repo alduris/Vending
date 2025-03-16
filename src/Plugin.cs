@@ -41,6 +41,8 @@ sealed class Plugin : BaseUnityPlugin
 
             VendingHooks.Apply();
             PebbsiHooks.Apply();
+
+            if (ModManager.ActiveMods.Any(x => x.id == "slime-cubed.devconsole")) Commands.Register();
         }
         catch (Exception e)
         {
