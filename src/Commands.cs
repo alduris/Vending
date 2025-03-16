@@ -1,4 +1,5 @@
-﻿using DevConsole;
+﻿using System.Collections.Generic;
+using DevConsole;
 using DevConsole.Commands;
 using UnityEngine;
 
@@ -20,11 +21,17 @@ namespace VendingMod
             {
                 GameConsole.WriteLine("Probable vending machine rooms in region:");
                 Random.State old = Random.state;
+                List<string> rooms = [];
                 foreach (var room in game.world.abstractRooms)
                 {
-                    if (room.shelter || room.gate) continue;
+                    if (room.shelter || room.gate || room.offScreenDen) continue;
                     Random.InitState(room.name.GetHashCode());
-                    if (Random.value < VendingHooks.VENDING_CHANCE) GameConsole.WriteLine(room.name);
+                    if (Random.value < VendingHooks.VENDING_CHANCE) rooms.Add(room.name);
+                }
+                rooms.Sort();
+                foreach (var room in rooms)
+                {
+                    GameConsole.WriteLine(room);
                 }
                 Random.state = old;
             }
