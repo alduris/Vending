@@ -207,7 +207,7 @@ namespace VendingMod
                         List<AbstractObjectType> offers = [Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi];
                         if (offeredItem is not VultureMask && Random.value < 0.4f) offers.Add(AbstractObjectType.VultureMask);
                         if (offeredItem is not DataPearl) offers.Add(AbstractObjectType.DataPearl);
-                        if (offeredItem is not Spear { abstractSpear.explosive: true } and not Spear { abstractSpear.electric: true }) offers.Add(AbstractObjectType.Spear);
+                        if (offeredItem is not ExplosiveSpear and not ElectricSpear) offers.Add(AbstractObjectType.Spear);
                         if (offeredItem is not ScavengerBomb) offers.Add(AbstractObjectType.ScavengerBomb);
                         if (offeredItem is not SporePlant) offers.Add(AbstractObjectType.SporePlant);
                         if (offeredItem is not PuffBall) offers.Add(AbstractObjectType.PuffBall);
@@ -354,6 +354,8 @@ namespace VendingMod
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
                         else if (ModManager.MSC && pick == MSCObjectType.LillyPuck)
                             obj = new LillyPuck.AbstractLillyPuck(room.world, null, pos, ID, 3, -1, -1, null);
+                        else if (pick == AbstractObjectType.WaterNut)
+                            obj = new WaterNut.AbstractWaterNut(room.world, null, pos, ID, -1, -1, null, true);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
                             obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
