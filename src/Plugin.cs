@@ -37,7 +37,10 @@ sealed class Plugin : BaseUnityPlugin
 
         try
         {
+            Enums.Register();
+
             VendingHooks.Apply();
+            PebbsiHooks.Apply();
         }
         catch (Exception e)
         {

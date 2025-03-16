@@ -169,7 +169,7 @@ namespace VendingMod
                     else if (value >= 8)
                     {
                         // Potential offers
-                        List<AbstractObjectType> offers = [];
+                        List<AbstractObjectType> offers = [Enums.FivePebbsi, Enums.FivePebbsi];
                         if (offeredItem is not VultureMask) offers.Add(AbstractObjectType.VultureMask);
                         if (offeredItem is not KarmaFlower) offers.Add(AbstractObjectType.KarmaFlower);
                         if (offeredItem is not DataPearl) offers.Add(AbstractObjectType.DataPearl);
@@ -204,7 +204,7 @@ namespace VendingMod
                     else if (value >= 5)
                     {
                         // Potential offers
-                        List<AbstractObjectType> offers = [];
+                        List<AbstractObjectType> offers = [Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi];
                         if (offeredItem is not VultureMask && Random.value < 0.4f) offers.Add(AbstractObjectType.VultureMask);
                         if (offeredItem is not DataPearl) offers.Add(AbstractObjectType.DataPearl);
                         if (offeredItem is not Spear { abstractSpear.explosive: true } and not Spear { abstractSpear.electric: true }) offers.Add(AbstractObjectType.Spear);
@@ -257,7 +257,7 @@ namespace VendingMod
                         else if (pick == AbstractObjectType.DataPearl)
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
                         else if (pick == AbstractObjectType.Spear)
-                            obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.5f);
+                            obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.6f);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
                             obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
@@ -266,7 +266,7 @@ namespace VendingMod
 
                     else if (value >= 3)
                     {
-                        List<AbstractObjectType> offers = [];
+                        List<AbstractObjectType> offers = [Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi];
                         if (offeredItem is not Spear) offers.Add(AbstractObjectType.Spear);
                         if (offeredItem is not ScavengerBomb) offers.Add(AbstractObjectType.ScavengerBomb);
                         if (offeredItem is not FlyLure) offers.Add(AbstractObjectType.FlyLure);
@@ -326,7 +326,7 @@ namespace VendingMod
                     else
                     {
                         // Potential offers
-                        List<AbstractObjectType> offers = [];
+                        List<AbstractObjectType> offers = [Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi];
                         bool seed = ModManager.MSC && offeredItem.abstractPhysicalObject.type == MSCObjectType.Seed;
                         if (offeredItem is not Spear) offers.Add(AbstractObjectType.Spear);
                         if (offeredItem is not ScavengerBomb) offers.Add(AbstractObjectType.ScavengerBomb);
