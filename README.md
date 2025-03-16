@@ -1,5 +1,4 @@
-Use this template on GitHub or just [download the code](https://github.com/alduris/TemplateMod/archive/refs/heads/master.zip), whichever is easiest.
+# Vending Machines
+Makes vending machines appear randomly around the world. Placements are random though will remain constant in all playthroughs.
 
-Rename `src/TestMod.csproj`, then edit `mod/modinfo.json` and `src/Plugin.cs` to customize your mod.
-
-See [the modding wiki](https://rainworldmodding.miraheze.org/wiki/Downpour_Reference/Mod_Directories) for `modinfo.json` documentation.
+Comes with a new item: Five Pebbsi
