@@ -82,7 +82,7 @@ namespace VendingMod
                 SlimeMold { JellyfishMode: true } => 0,
                 GlowWeed => 1,
                 Mushroom or Fly or Rock => 2,
-                FlyLure or FlareBomb or EggBugEgg or FireEgg or GooieDuck or FirecrackerPlant or JellyFish or SporePlant or PuffBall or Lantern => 3,
+                FlyLure or FlareBomb or FireEgg or GooieDuck or FirecrackerPlant or JellyFish or SporePlant or PuffBall or Lantern => 3,
                 Spear or LillyPuck or ScavengerBomb => 4,
                 OverseerCarcass => 5,
                 NeedleEgg => 6,
