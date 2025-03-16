@@ -129,8 +129,8 @@ namespace VendingMod
         {
             bool flag = blink > 0 && Random.value < 0.5f;
             sLeaser.sprites[0].color = flag ? blinkColor : palette.blackColor;
-            sLeaser.sprites[1].color = flag ? blinkColor : Color.Lerp(bodyColor, palette.blackColor, darkness);
-            sLeaser.sprites[2].color = flag ? blinkColor : Color.Lerp(logoColor, palette.blackColor, darkness);
+            sLeaser.sprites[1].color = flag ? blinkColor : Color.Lerp(bodyColor, palette.blackColor, Mathf.Pow(darkness, 1.5f));
+            sLeaser.sprites[2].color = flag ? blinkColor : Color.Lerp(logoColor, palette.blackColor, Mathf.Pow(darkness, 1.5f));
         }
     }
 }
