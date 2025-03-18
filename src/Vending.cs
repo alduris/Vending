@@ -168,7 +168,7 @@ namespace VendingMod
                         else if (ModManager.MSC && pick == MSCObjectType.JokeRifle)
                             obj = new JokeRifle.AbstractRifle(room.world, null, pos, ID, JokeRifle.AbstractRifle.AmmoType.Rock);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
-                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null) { isFresh = false, isConsumed = true };
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
@@ -203,7 +203,7 @@ namespace VendingMod
                         else if (pick == AbstractObjectType.Spear)
                             obj = new AbstractSpear(room.world, null, pos, ID, false, true) { electricCharge = 10 };
                         else if (AbstractConsumable.IsTypeConsumable(pick))
-                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null) { isFresh = false, isConsumed = true };
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
@@ -271,7 +271,7 @@ namespace VendingMod
                         else if (pick == AbstractObjectType.SporePlant)
                             obj = new SporePlant.AbstractSporePlant(room.world, null, pos, ID, -1, -1, null, false, true);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
-                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null) { isFresh = false, isConsumed = true };
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
@@ -333,7 +333,7 @@ namespace VendingMod
                         else if (pick == AbstractObjectType.BubbleGrass)
                             obj = new BubbleGrass.AbstractBubbleGrass(room.world, null, pos, ID, 1f, -1, -1, null);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
-                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null) { isFresh = false, isConsumed = true };
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
@@ -372,13 +372,18 @@ namespace VendingMod
                         else if (pick == AbstractObjectType.WaterNut)
                             obj = new WaterNut.AbstractWaterNut(room.world, null, pos, ID, -1, -1, null, true);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
-                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null) { isFresh = false, isConsumed = true };
+                            obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
                             obj = new AbstractPhysicalObject(room.world, pick, null, pos, ID);
                     }
 
                     if (obj != null)
                     {
+                        if (obj is AbstractConsumable ac)
+                        {
+                            ac.isFresh = false;
+                            ac.isConsumed = true;
+                        }
                         obj.Move(room.GetWorldCoordinate(this.pos));
                         obj.RealizeInRoom();
                     }
