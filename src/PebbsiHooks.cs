@@ -9,6 +9,24 @@
             On.Player.Grabability += Player_Grabability;
             On.Player.CanBeSwallowed += Player_CanBeSwallowed;
             On.ScavengerAI.CollectScore_PhysicalObject_bool += ScavengerAI_CollectScore_PhysicalObject_bool;
+            On.SLOracleBehaviorHasMark.TypeOfMiscItem += SLOracleBehaviorHasMark_TypeOfMiscItem;
+            On.SLOracleBehaviorHasMark.MoonConversation.AddEvents += MoonConversation_AddEvents;
+        }
+
+        private static void MoonConversation_AddEvents(On.SLOracleBehaviorHasMark.MoonConversation.orig_AddEvents orig, SLOracleBehaviorHasMark.MoonConversation self)
+        {
+            orig(self);
+            if (self.id == Conversation.ID.Moon_Misc_Item)
+            {
+                self.events.Add(new Conversation.TextEvent(self, 10, self.Translate("It's a can of Five Pebbsi. It is a drink that was popular with our citizens."), 0));
+                self.events.Add(new Conversation.TextEvent(self, 10, self.Translate("I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you."), 0));
+            }
+        }
+
+        private static SLOracleBehaviorHasMark.MiscItemType SLOracleBehaviorHasMark_TypeOfMiscItem(On.SLOracleBehaviorHasMark.orig_TypeOfMiscItem orig, SLOracleBehaviorHasMark self, PhysicalObject testItem)
+        {
+            if (testItem is FivePebbsi) return Enums.PebbsiDialogue;
+            return orig(self, testItem);
         }
 
         private static int ScavengerAI_CollectScore_PhysicalObject_bool(On.ScavengerAI.orig_CollectScore_PhysicalObject_bool orig, ScavengerAI self, PhysicalObject obj, bool weaponFiltered)

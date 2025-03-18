@@ -1,0 +1,2 @@
+It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|Это банка «Пять пеббси». Это напиток, который был популярен среди наших горажан.
+I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|Я не уверена, что стала бы пить его на твоём месте, <PlayerName>. Это не очень хорошо для тебя.

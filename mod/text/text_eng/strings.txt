@@ -1,0 +1,2 @@
+It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|It's a can of Five Pebbsi. It is a drink that was popular with our citizens.
+I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|I wouldn't drink it if I were you, <PlayerName>. It's not good for you.

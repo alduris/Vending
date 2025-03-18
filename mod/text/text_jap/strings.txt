@@ -1,0 +1,2 @@
+It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|ファイブ・ペブシの缶だ。市民に人気のあった飲み物だ。
+I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|私だったら飲むかどうかわからないよ、<PlayerName>。体に良くないからね。

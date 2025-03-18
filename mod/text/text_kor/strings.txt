@@ -1,0 +1,2 @@
+It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|파이브 페브시 캔입니다. 우리 시민들에게 인기가 많았던 음료입니다.
+I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|저라면 마실지 잘 모르겠네요, <PlayerName>. 몸에 좋지 않아요.

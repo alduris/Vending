@@ -31,6 +31,9 @@ namespace VendingMod
             this.room = room;
             this.pos = pos;
 
+            Random.State old = Random.state;
+            Random.InitState(room.abstractRoom.name.GetHashCode());
+
             products = new Product[rows.Length][];
             for (int i = 0; i < rows.Length; i++)
             {
@@ -40,6 +43,8 @@ namespace VendingMod
                     products[i][j] = new Product(i, j, Mathf.Lerp(Random.Range(0.8f, 1f), 1f, Mathf.Sqrt(Random.value)), Custom.HSL2RGB(Random.value, Mathf.Pow(Random.value, 0.2f), 0.5f));
                 }
             }
+
+            Random.state = old;
         }
 
         public override void Update(bool eu)
@@ -259,6 +264,8 @@ namespace VendingMod
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
                         else if (pick == AbstractObjectType.Spear)
                             obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.6f);
+                        else if (pick == AbstractObjectType.BubbleGrass)
+                            obj = new BubbleGrass.AbstractBubbleGrass(room.world, null, pos, ID, 1f, -1, -1, null);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
                             obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
@@ -319,6 +326,8 @@ namespace VendingMod
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
                         else if (ModManager.MSC && pick == MSCObjectType.LillyPuck)
                             obj = new LillyPuck.AbstractLillyPuck(room.world, null, pos, ID, 3, -1, -1, null);
+                        else if (pick == AbstractObjectType.BubbleGrass)
+                            obj = new BubbleGrass.AbstractBubbleGrass(room.world, null, pos, ID, 1f, -1, -1, null);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
                             obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
@@ -438,7 +447,7 @@ namespace VendingMod
         public void ApplyPalette(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
         {
             Random.State old = Random.state;
-            Random.InitState((int)(pos.x + pos.y) + room.abstractRoom.index);
+            Random.InitState(room.abstractRoom.name.GetHashCode());
             var gray = new HSLColor(Random.Range(0.4f, 0.6f), Random.Range(0f, 0.1f), Random.Range(0.05f, 0.2f)).rgb;
             sLeaser.sprites[0].color = Color.Lerp(Color.Lerp(palette.texture.GetPixel(4, 0), gray, 0.4f), palette.blackColor, room.Darkness(pos) * 0.75f);
             sLeaser.sprites[1].color = new Color(0.01f, 0.01f, 0.01f);

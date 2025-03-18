@@ -1,0 +1,2 @@
+It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|É uma lata de Five Pebbsi. É uma bebida que era popular entre os nossos cidadãos.
+I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|Não tenho a certeza se a beberia se fosse a ti, <PlayerName>. Não é bom para ti.
