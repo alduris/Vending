@@ -4,7 +4,7 @@
   "version": "1.1",
   "authors": "Alduris",
   "description": "Has vending machines that appear randomly throughout the world.",
-  "tags": [],
+  "tags": ["Game Mechanics", "Items"],
   "requirements": [],
   "requirements_names": [],
   "checksum_override_version": false
