@@ -139,7 +139,7 @@ namespace VendingMod
                     int value = Random.value > 0.5f ? offerWorth : Math.Max(Mathf.CeilToInt(Mathf.Lerp(offerWorth * 0.65f, offerWorth, Random.value)), 1);
                     offerWorth -= value;
 
-                    AbstractPhysicalObject obj = null;
+                    AbstractPhysicalObject obj;
 
                     if (value >= 10)
                     {
@@ -266,6 +266,8 @@ namespace VendingMod
                             obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.6f);
                         else if (pick == AbstractObjectType.BubbleGrass)
                             obj = new BubbleGrass.AbstractBubbleGrass(room.world, null, pos, ID, 1f, -1, -1, null);
+                        else if (pick == AbstractObjectType.SporePlant)
+                            obj = new SporePlant.AbstractSporePlant(room.world, null, pos, ID, -1, -1, null, false, true);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
                             obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else

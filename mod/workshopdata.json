@@ -2,7 +2,7 @@
   "Title": "Vending Machines",
   "Description": "Makes vending machines appear in constant yet random places around the world.\r\n\r\nTrade with them by standing in front of them with an item in your hand, standing still, and holding up. Dispensed items are random and vary in value depending on the determined \u0022worth\u0022 of your trade. Compatible with some modded items. It may hunger for flesh.\r\n\r\nComes with a new item: Five Pebbsi. Delicious!\r\n\r\n[spoiler]This mod is half a joke mod. Don\u0027t expect it to be too serious.[/spoiler]\r\n\r\n[hr]\r\n\r\nTranslation help: DeepL.com for the rough translations. Mold223 for refining the Russian translation. Slithers for refining the Spanish translation.",
   "ID": "alduris.vending",
-  "Version": "1.0",
+  "Version": "1.1",
   "TargetGameVersion": "v1.9.15b",
   "Requirements": "",
   "RequirementNames": "",

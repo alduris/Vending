@@ -1,7 +1,7 @@
 ﻿{
   "id": "alduris.vending",
   "name": "Vending Machines",
-  "version": "1.0",
+  "version": "1.1",
   "authors": "Alduris",
   "description": "Has vending machines that appear randomly throughout the world.",
   "tags": [],
