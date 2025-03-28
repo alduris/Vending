@@ -7,6 +7,7 @@ using UnityEngine;
 using AbstractObjectType = AbstractPhysicalObject.AbstractObjectType;
 using DataPearlType = DataPearl.AbstractDataPearl.DataPearlType;
 using MSCObjectType = MoreSlugcats.MoreSlugcatsEnums.AbstractObjectType;
+using DLCObjectType = DLCSharedEnums.AbstractObjectType;
 
 namespace VendingMod
 {
@@ -151,7 +152,7 @@ namespace VendingMod
                         if (ModManager.MSC)
                         {
                             if (offeredItem is not Player) offers.Add(AbstractObjectType.Creature);
-                            if (offeredItem is not SingularityBomb) offers.Add(MSCObjectType.SingularityBomb);
+                            if (offeredItem is not SingularityBomb) offers.Add(DLCObjectType.SingularityBomb);
                             if (Random.value < 0.01f) offers.Add(MSCObjectType.JokeRifle);
                         }
 
@@ -183,7 +184,7 @@ namespace VendingMod
                         if (offeredItem is not OracleSwarmer) offers.Add(AbstractObjectType.SSOracleSwarmer);
                         if (ModManager.MSC)
                         {
-                            if (offeredItem is not SingularityBomb && Random.value < 0.15f) offers.Add(MSCObjectType.SingularityBomb);
+                            if (offeredItem is not SingularityBomb && Random.value < 0.15f) offers.Add(DLCObjectType.SingularityBomb);
                             if (offeredItem is not ElectricSpear { abstractSpear.electricCharge: > 0 }) offers.Add(AbstractObjectType.Spear);
                         }
                         if (Plugin.M4rblelous)
@@ -253,7 +254,7 @@ namespace VendingMod
                         if (pick == AbstractObjectType.Creature)
                         {
                             List<CreatureTemplate.Type> critters = [CreatureTemplate.Type.Snail, CreatureTemplate.Type.TubeWorm, CreatureTemplate.Type.TubeWorm];
-                            if (ModManager.MSC) critters.Add(MoreSlugcatsEnums.CreatureTemplateType.Yeek);
+                            if (ModManager.MSC) critters.Add(DLCSharedEnums.CreatureTemplateType.Yeek);
                             if (Plugin.M4rblelous) critters.Add(new CreatureTemplate.Type("HazerMom", false));
                             if (Plugin.M4rblelous && Random.value < 0.01f) critters.Add(new CreatureTemplate.Type("NoodleEater", false));
                             if (Plugin.Shrembly && Random.value < 0.01f) critters.Add(new CreatureTemplate.Type("BabyCroaker", false));
@@ -293,8 +294,8 @@ namespace VendingMod
 
                         if (ModManager.MSC)
                         {
-                            if (offeredItem is not GooieDuck) offers.Add(MSCObjectType.GooieDuck);
-                            if (offeredItem is not LillyPuck) offers.Add(MSCObjectType.LillyPuck);
+                            if (offeredItem is not GooieDuck) offers.Add(DLCObjectType.GooieDuck);
+                            if (offeredItem is not LillyPuck) offers.Add(DLCObjectType.LillyPuck);
                         }
                         if (Plugin.M4rblelous)
                         {
@@ -328,7 +329,7 @@ namespace VendingMod
                             obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.3f);
                         else if (pick == AbstractObjectType.DataPearl)
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
-                        else if (ModManager.MSC && pick == MSCObjectType.LillyPuck)
+                        else if (ModManager.MSC && pick == DLCObjectType.LillyPuck)
                             obj = new LillyPuck.AbstractLillyPuck(room.world, null, pos, ID, 3, -1, -1, null);
                         else if (pick == AbstractObjectType.BubbleGrass)
                             obj = new BubbleGrass.AbstractBubbleGrass(room.world, null, pos, ID, 1f, -1, -1, null);
@@ -342,7 +343,7 @@ namespace VendingMod
                     {
                         // Potential offers
                         List<AbstractObjectType> offers = [Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi, Enums.FivePebbsi];
-                        bool seed = ModManager.MSC && offeredItem.abstractPhysicalObject.type == MSCObjectType.Seed;
+                        bool seed = ModManager.MSC && offeredItem.abstractPhysicalObject.type == DLCObjectType.Seed;
                         if (offeredItem is not Spear) offers.Add(AbstractObjectType.Spear);
                         if (offeredItem is not ScavengerBomb) offers.Add(AbstractObjectType.ScavengerBomb);
                         if (offeredItem is not Rock) offers.Add(AbstractObjectType.Rock);
@@ -355,10 +356,10 @@ namespace VendingMod
 
                         if (ModManager.MSC)
                         {
-                            if (offeredItem is not LillyPuck) offers.Add(MSCObjectType.LillyPuck);
-                            if (offeredItem is not GlowWeed) offers.Add(MSCObjectType.GlowWeed);
-                            if (offeredItem is not DandelionPeach) offers.Add(MSCObjectType.DandelionPeach);
-                            if (offeredItem is not SlimeMold || !seed) offers.Add(MSCObjectType.Seed);
+                            if (offeredItem is not LillyPuck) offers.Add(DLCObjectType.LillyPuck);
+                            if (offeredItem is not GlowWeed) offers.Add(DLCObjectType.GlowWeed);
+                            if (offeredItem is not DandelionPeach) offers.Add(DLCObjectType.DandelionPeach);
+                            if (offeredItem is not SlimeMold || !seed) offers.Add(DLCObjectType.Seed);
                         }
 
                         // Pick one
@@ -367,7 +368,7 @@ namespace VendingMod
                             obj = new AbstractSpear(room.world, null, pos, ID, Random.value < 0.05f);
                         else if (pick == AbstractObjectType.DataPearl)
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, DataPearlType.Misc);
-                        else if (ModManager.MSC && pick == MSCObjectType.LillyPuck)
+                        else if (ModManager.MSC && pick == DLCObjectType.LillyPuck)
                             obj = new LillyPuck.AbstractLillyPuck(room.world, null, pos, ID, 3, -1, -1, null);
                         else if (pick == AbstractObjectType.WaterNut)
                             obj = new WaterNut.AbstractWaterNut(room.world, null, pos, ID, -1, -1, null, true);
