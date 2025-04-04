@@ -37,7 +37,8 @@ namespace VendingMod
             if (!slatedForDeletetion && playerRef.TryGetTarget(out var player) && player.room == room)
             {
                 var inp = player.input[0];
-                bool good = !player.dead && !player.Stunned && inp.x == 0 && !inp.pckp && !inp.thrw && !inp.mp && !inp.jmp && player.bodyMode == Player.BodyModeIndex.Stand;
+                bool good = !player.dead && !player.Stunned && inp.x == 0 && !inp.pckp && !inp.thrw && !inp.mp && !inp.jmp
+                    && (player.bodyMode == Player.BodyModeIndex.Stand || player.bodyMode == Player.BodyModeIndex.ZeroG);
                 if (good && inp.y == 1)
                 {
                     buttonTrack++;

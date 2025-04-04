@@ -1,10 +1,10 @@
 ﻿{
   "id": "alduris.vending",
   "name": "Vending Machines",
-  "version": "1.1",
+  "version": "1.2",
   "authors": "Alduris",
   "description": "Has vending machines that appear randomly throughout the world.",
-  "tags": ["Game Mechanics", "Items"],
+  "tags": ["Game Mechanics", "Items", "Base", "Downpour", "Watcher"],
   "requirements": [],
   "requirements_names": [],
   "checksum_override_version": false
