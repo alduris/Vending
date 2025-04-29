@@ -16,7 +16,7 @@
         private static void MoonConversation_AddEvents(On.SLOracleBehaviorHasMark.MoonConversation.orig_AddEvents orig, SLOracleBehaviorHasMark.MoonConversation self)
         {
             orig(self);
-            if (self.id == Conversation.ID.Moon_Misc_Item)
+            if (self.id == Conversation.ID.Moon_Misc_Item && self.describeItem == Enums.PebbsiDialogue)
             {
                 self.events.Add(new Conversation.TextEvent(self, 10, self.Translate("It's a can of Five Pebbsi. It is a drink that was popular with our citizens."), 0));
                 self.events.Add(new Conversation.TextEvent(self, 10, self.Translate("I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you."), 0));
