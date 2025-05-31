@@ -12,7 +12,7 @@ using System.Security.Permissions;
 
 namespace VendingMod;
 
-[BepInPlugin("alduris.vending", "Vending Machines", "1.2"), BepInDependency("slime-cubed.devconsole", BepInDependency.DependencyFlags.SoftDependency)]
+[BepInPlugin("alduris.vending", "Vending Machines", "1.2.4"), BepInDependency("slime-cubed.devconsole", BepInDependency.DependencyFlags.SoftDependency)]
 sealed class Plugin : BaseUnityPlugin
 {
     public static new ManualLogSource Logger;

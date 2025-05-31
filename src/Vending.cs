@@ -293,6 +293,8 @@ namespace VendingMod
                             obj = new BubbleGrass.AbstractBubbleGrass(room.world, null, pos, ID, 1f, -1, -1, null);
                         else if (pick == AbstractObjectType.SporePlant)
                             obj = new SporePlant.AbstractSporePlant(room.world, null, pos, ID, -1, -1, null, false, true);
+                        else if (ModManager.MSC && pick == MSCObjectType.FireEgg)
+                            obj = new FireEgg.AbstractBugEgg(room.world, null, pos, ID, Random.value);
                         else if (AbstractConsumable.IsTypeConsumable(pick))
                             obj = new AbstractConsumable(room.world, pick, null, pos, ID, -1, -1, null);
                         else
