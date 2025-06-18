@@ -172,7 +172,7 @@ namespace VendingMod
                             obj = new VultureMask.AbstractVultureMask(room.world, null, pos, ID, ID.RandomSeed, true);
                         else if (pick == AbstractObjectType.DataPearl)
                         {
-                            var pearl = new DataPearlType(DataPearlType.values.entries[DataPearlType.values.entries.Count], false);
+                            var pearl = new DataPearlType(DataPearlType.values.entries[Random.Range(0, DataPearlType.values.entries.Count)], false);
                             obj = new DataPearl.AbstractDataPearl(room.world, pick, null, pos, ID, -1, -1, null, pearl);
                         }
                         else if (pick == AbstractObjectType.Creature)
