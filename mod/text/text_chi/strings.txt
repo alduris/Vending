@@ -1,2 +1,2 @@
-It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|这是一罐 Five Pebbsi。这是一种深受我们市民喜爱的饮料。
-I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|如果我是你，我不确定是否会喝它，<PlayerName>。这对你不好。
+It's a can of Five Pebbsi. It is a drink that was popular with our citizens.|这是一罐五石可乐，一种深受我们市民喜爱的饮料。
+I'm not sure if I would drink it if I were you, <PlayerName>. It's not good for you.|<PlayerName>，我要是你的话，我不一定会选择喝它。这对你不好。
